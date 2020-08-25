@@ -1,17 +1,14 @@
 {
-
-  "name": "vanilor/ulf-php-core",
-  "type": "framework",
-  "description": "",
-  "keywords": ["u-lf", "php", "php7"],
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Vanilor",
-      "email": "dev@vanilor.info",
-      "homepage": "https://vaniolr.info",
-      "role": "Maintainer"
-    }
-  ]
-
+    "name": "vanilor/ulf-php-core",
+    "description": "The core of the U-LF PHP framework",
+    "type": "framework",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vanilor",
+            "email": "dev@vanilor.info"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
 }
