@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core;
+namespace ULF\Core;
 
 class KeyBuilder
 {
