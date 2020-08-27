@@ -1,6 +1,6 @@
 <?php
 
-use App\Core\Helper;
+use ULF\Core\Helper;
 
 /**
  *
@@ -170,17 +170,8 @@ if(!function_exists('config')){
 
     function config(string $key = NULL) {
 
-        global $config;
-
-        if(!$key)
-            return $config;
-
-        if(!isset($config[$key])){
-            trigger_error("[Configuration] $key configuration key does not exist.", E_USER_ERROR);
-            return;
-        }
-
-        return $config[$key];
+       global $core;
+       return $core->config($key);
 
     }
 
