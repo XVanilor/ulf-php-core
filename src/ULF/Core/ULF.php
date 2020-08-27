@@ -28,10 +28,9 @@ class ULF
     public function run(){
 
         $this->config = (new KeyBuilder('../config'))->build();
-        $this->routes = route();
+        $this->routes = $this->loadRoutes();
         $this->modules = $this->loadModules();
         $this->loadFunctions(); //Include functions files
-
 
         //Start session
         if(!session_id())
@@ -44,7 +43,7 @@ class ULF
         if((substr($this->uri, -1, 1) === "/") && $this->uri !== "/")
             $this->uri = substr($this->uri, 0, strlen($this->uri)-1);
 
-        array_key_exists($this->uri, $this->routes) ? include_once config('paths.controllers').$this->routes[$this->uri].".php" : include_once config('paths.controllers').$this->routes["/404"].".php";
+        array_key_exists($this->uri, $this->routes) ? include_once config('core.paths.controllers').$this->routes($this->uri).".php" : include_once config('core.paths.controllers').$this->routes("errors.404").".php";
 
         return $this;
     }
@@ -54,9 +53,17 @@ class ULF
      *
      * @return array
      */
-    public function config(){
+    public function config($key = NULL){
 
-        return $this->config;
+        if(!$key)
+            return $this->config;
+
+        if(!isset($this->config[$key])){
+            trigger_error("[Configuration] $key configuration key does not exist.", E_USER_ERROR);
+            return;
+        }
+
+        return $this->config[$key];
     }
 
     /**
@@ -64,9 +71,18 @@ class ULF
      *
      * @return array
      */
-    public function routes(){
+    public function routes($route_path = NULL){
 
-        return $this->routes;
+        if(!$route_path)
+            return $this->routes;
+
+        if(!isset($this->routes[$route_path])){
+            trigger_error("[Router] $route_path route key does not exist.", E_USER_ERROR);
+            return;
+        }
+
+        return $this->routes[$route_path];
+
     }
 
     /**
@@ -74,15 +90,15 @@ class ULF
      *
      * @return array
      */
-    protected function loadModules(){
+    private function loadModules(){
 
         $modules = [];
-        foreach(glob($path = config('paths.modules')."*", GLOB_ONLYDIR) as $dir) {
-            $modules[] = config('paths.modules').basename($dir);
+        foreach(glob($path = config('core.paths.modules')."*", GLOB_ONLYDIR) as $dir) {
+            $modules[] = config('core.paths.modules').basename($dir);
         }
 
         //Remove the default App/Functions/ directory (which contains custom functions)
-        return array_diff($modules, [config('paths.modules')."Functions"]);
+        return array_diff($modules, [config('core.paths.modules')."Functions"]);
     }
 
     /**
@@ -90,15 +106,15 @@ class ULF
      *
      * @return void
      */
-    protected function loadFunctions(){
+    private function loadFunctions(){
 
         /**
          * @TODO
          * Improve custom functions inclusion
          */
-        $customFunctions = array_diff(scandir(config('paths.modules')."Functions/"), array(".", ".."));
+        $customFunctions = array_diff(scandir(config('core.paths.modules')."Functions/"), array(".", ".."));
         foreach($customFunctions as $customFunction)
-            include_once config('paths.modules')."Functions/".$customFunction;
+            include_once config('core.paths.modules')."Functions/".$customFunction;
 
         /**
          * Retrieve all modules functions
@@ -110,6 +126,28 @@ class ULF
             }
         }
 
+    }
+
+    /**
+     * Load routes from files
+     *
+     * @return array
+     */
+    private function loadRoutes(){
+
+        $dir = '../routes/';
+        $routes_dir = array_diff(scandir($dir), ['.', '..']);
+        $routes = [];
+
+        foreach($routes_dir as $route_file){
+
+            $route_file = include_once $dir.$route_file;
+
+            foreach ($route_file as $uri => $route)
+                $routes[(string)$uri] = $route;
+        }
+
+        return $routes;
     }
 
 }
