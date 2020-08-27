@@ -1,6 +1,6 @@
 <?php
 
-namespace ULF\Core;
+namespace App\Core;
 
 use ReflectionObject;
 use ReflectionException;
