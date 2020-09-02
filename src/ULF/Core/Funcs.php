@@ -1,7 +1,5 @@
 <?php
 
-use ULF\Core\Helper;
-
 /**
  *
  * File-linkage functions
@@ -19,7 +17,7 @@ use ULF\Core\Helper;
 
 if(!function_exists('asset')){
     function asset(string $path){
-        return Helper::getRelativeRoot()."assets/".$path;
+        return \ULF\Core\Helper::getRelativeRoot()."assets/".$path;
     }
 }
 
@@ -72,33 +70,6 @@ if(!function_exists("module")){
 
         require_once config('core.paths.modules').$name.".php";
         return;
-    }
-}
-
-/**
- * Get all available routes
- *
- * @param string $name
- *
- * @return array
- *
- **/
-
-if(!function_exists("route")){
-    function route(string $name = NULL){
-
-        global $routes;
-
-        $routing = require_once config('core.paths.routes')."routes.php";
-        $routing_test = require_once config('core.paths.routes').'tests.php';
-        if(!$routes)
-            $routes = array_merge($routing, $routing_test);
-
-        if($name)
-            return isset($routes[$name]) ? $routes[$name] : ""; //@TODO Throw RouteNotFoundException when not found
-
-
-        return $routes;
     }
 }
 
