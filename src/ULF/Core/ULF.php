@@ -43,7 +43,7 @@ class ULF
         if((substr($this->uri, -1, 1) === "/") && $this->uri !== "/")
             $this->uri = substr($this->uri, 0, strlen($this->uri)-1);
 
-        array_key_exists($this->uri, $this->routes) ? include_once config('core.paths.controllers').$this->routes($this->uri).".php" : include_once config('core.paths.controllers').$this->routes("errors.404").".php";
+        array_key_exists($this->uri, $this->routes) ? include_once config('core.paths.controllers').$this->route($this->uri).".php" : include_once config('core.paths.controllers').$this->route("errors.404").".php";
 
         return $this;
     }
@@ -51,7 +51,7 @@ class ULF
     /**
      * Configuration getter.
      *
-     * @return array
+     * @return array|string
      */
     public function config($key = NULL){
 
@@ -67,11 +67,11 @@ class ULF
     }
 
     /**
-     * Routes getter.
+     * Route getter.
      *
-     * @return array
+     * @return array|string
      */
-    public function routes($route_path = NULL){
+    public function route($route_path = NULL){
 
         if(!$route_path)
             return $this->routes;
@@ -102,7 +102,7 @@ class ULF
     }
 
     /**
-     * Include fonctions files
+     * Include functions files
      *
      * @return void
      */

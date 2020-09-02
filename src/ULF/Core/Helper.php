@@ -15,9 +15,9 @@ class Helper
 {
 
     /**
-     * @var static $properties
+     * @var array $properties
      */
-    private static $properties;
+    private static array $properties;
 
     /**
      *
@@ -63,16 +63,6 @@ class Helper
 
         header("Location: " . $url);
         return;
-    }
-
-    /**
-     * TODO
-     * Create getRoutes and setRoute functions
-     *
-     * @return mixed
-     */
-    public static function Throw404(){
-        return include_once '../pages/front/errors/404.php';
     }
 
     /**
