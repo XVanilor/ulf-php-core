@@ -93,8 +93,8 @@ class ULF
             return $this->config;
 
         if(!isset($this->config[$key])){
+            debug_print_backtrace();
             trigger_error("[Configuration] $key configuration key does not exist.", E_USER_ERROR);
-            return;
         }
 
         return $this->config[$key];
@@ -111,6 +111,7 @@ class ULF
             return $this->routes;
 
         if(!isset($this->routes[$route_path])){
+            debug_print_backtrace();
             trigger_error("[Router] $route_path route key does not exist.", E_USER_ERROR);
             return;
         }

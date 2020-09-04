@@ -11,8 +11,8 @@ class KeyBuilder
     public function __construct(string $dir_path)
     {
         if(!is_dir($dir_path)) {
+            debug_print_backtrace();
             trigger_error("[KeyBuilder] $dir_path directory does not exists. Can't build keys from this directory.", E_USER_ERROR);
-            exit;
         }
 
         $this->dir_path = $dir_path;
@@ -82,6 +82,7 @@ class KeyBuilder
             $file_built         = [];
 
             if(!is_array($stack)){
+                debug_print_backtrace();
                 trigger_error("[KeyBuilder] File $file is not returning an array. Aborting.", E_USER_ERROR);
                 exit;
             }

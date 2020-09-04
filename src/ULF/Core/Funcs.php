@@ -88,8 +88,8 @@ if(!function_exists("view")){
             extract($datas);
 
         if(!is_file(config('core.paths.views').$name.'.php')){
+            debug_print_backtrace();
             trigger_error("[View] View $name not found.", E_USER_ERROR);
-            return;
         }
 
         require_once config('core.paths.views').$name.'.php' ;
