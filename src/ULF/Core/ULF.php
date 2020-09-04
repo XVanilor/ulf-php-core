@@ -11,14 +11,14 @@ class ULF
     protected array $modules;
 
     public string   $uri;
+    public const PREVENT_DEFAULT_ROUTING   = "prevent_routing";
+    public const PREVENT_DEFAULT_CONFIG    = "prevent_config";
+    public const PREVENT_DEFAULT_MODULES   = "prevent_modules";
+    public const PREVENT_DEFAULT_FUNCS     = "prevent_funcs";
+    public const PREVENT_DEFAULT_SESSION   = "prevent_funcs";
 
     private array   $prevents;
 
-    private const PREVENT_DEFAULT_ROUTING   = "prevent_routing";
-    private const PREVENT_DEFAULT_CONFIG    = "prevent_config";
-    private const PREVENT_DEFAULT_MODULES   = "prevent_modules";
-    private const PREVENT_DEFAULT_FUNCS     = "prevent_funcs";
-    private const PREVENT_DEFAULT_SESSION   = "prevent_funcs";
 
     /**
      * ULF constructor.
