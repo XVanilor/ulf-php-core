@@ -75,7 +75,7 @@ class KeyBuilder
     private function buildFile(string $file, string $file_key){
 
             //Building keys
-            $stack              = include_once $file;
+            $stack              = include $file;
             $current_file_key   = $file_key;
 
             $current_key        = $current_file_key;
