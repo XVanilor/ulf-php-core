@@ -12,6 +12,14 @@ class ULF
 
     public string   $uri;
 
+    private array   $prevents;
+
+    private const PREVENT_DEFAULT_ROUTING   = "prevent_routing";
+    private const PREVENT_DEFAULT_CONFIG    = "prevent_config";
+    private const PREVENT_DEFAULT_MODULES   = "prevent_modules";
+    private const PREVENT_DEFAULT_FUNCS     = "prevent_funcs";
+    private const PREVENT_DEFAULT_SESSION   = "prevent_funcs";
+
     /**
      * ULF constructor.
      */
@@ -20,6 +28,20 @@ class ULF
         $this->config   = [];
         $this->routes   = [];
         $this->modules  = [];
+        $this->prevents = [];
+    }
+
+    /**
+     * Prevents some default features of the core in order to let you code yours. Enjoy!
+     *
+     * @param string $prevent_const
+     *
+     * @return $this
+     */
+    public function preventDefault(string $prevent_const){
+
+        $this->prevents[$prevent_const] = 1;
+        return $this;
     }
 
     /**
@@ -27,23 +49,35 @@ class ULF
      */
     public function run(){
 
-        $this->config = (new KeyBuilder('../config'))->build();
-        $this->routes = $this->loadRoutes();
-        $this->modules = $this->loadModules();
-        $this->loadFunctions(); //Include functions files
+        if(!isset($this->prevents[self::PREVENT_DEFAULT_CONFIG]))
+            $this->config = (new KeyBuilder('../config'))->build();
 
-        //Start session
-        if(!session_id())
-            session_start();
+        if(!isset($this->prevents[self::PREVENT_DEFAULT_MODULES]))
+            $this->modules = $this->loadModules();
 
-        //$uri = strtok(strtok(strip_tags($_SERVER['REQUEST_URI']), "?"), "&");
-        $this->uri = strtok(strtok(strip_tags($_SERVER['REQUEST_URI']), "?"), "&");
+        if(!isset($this->prevents[self::PREVENT_DEFAULT_FUNCS]))
+            $this->loadFunctions(); //Include functions files
 
-        //Remove the end / if so
-        if((substr($this->uri, -1, 1) === "/") && $this->uri !== "/")
-            $this->uri = substr($this->uri, 0, strlen($this->uri)-1);
+        if(!isset($this->prevents[self::PREVENT_DEFAULT_SESSION])){
+            //Start session
+            if(!session_id())
+                session_start();
+        }
 
-        array_key_exists($this->uri, $this->routes) ? include_once config('core.paths.controllers').$this->route($this->uri).".php" : include_once config('core.paths.controllers').$this->route("errors.404").".php";
+        if(!isset($this->prevents[self::PREVENT_DEFAULT_ROUTING])){
+
+            $this->routes = $this->loadRoutes();
+
+            //$uri = strtok(strtok(strip_tags($_SERVER['REQUEST_URI']), "?"), "&");
+            $this->uri = strtok(strtok(strip_tags($_SERVER['REQUEST_URI']), "?"), "&");
+
+            //Remove the end / if so
+            if((substr($this->uri, -1, 1) === "/") && $this->uri !== "/")
+                $this->uri = substr($this->uri, 0, strlen($this->uri)-1);
+
+            array_key_exists($this->uri, $this->routes) ? include_once config('core.paths.controllers').$this->route($this->uri).".php" : include_once config('core.paths.controllers').$this->route("errors.404").".php";
+
+        }
 
         return $this;
     }
