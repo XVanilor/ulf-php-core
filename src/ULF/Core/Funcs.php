@@ -51,7 +51,7 @@ if(!function_exists("layout")){
 if(!function_exists("controller")){
     function controller(string $name){
 
-        include config('core.paths.back').$name.".php";
+        include config('core.paths.controllers').$name.".php";
         return;
     }
 }
