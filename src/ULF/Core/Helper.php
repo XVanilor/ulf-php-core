@@ -23,7 +23,7 @@ class Helper
      *
      */
     private static function getStaticVars(){
-        self::$properties["configPath"] = self::getRelativeRoot()."config/";
+        self::$properties["configPath"] = self::getAbsoluteRoot()."/config/";
         self::$properties["config"] = "";
     }
 
@@ -33,7 +33,7 @@ class Helper
      */
     public static function getEnv($var = NULL){
 
-        $env = json_decode(file_get_contents(self::getRelativeRoot()."App/env.json"), true);
+        $env = json_decode(file_get_contents(self::getAbsoluteRoot()."/App/env.json"), true);
 
         if(!$var)
             return $env;
@@ -70,13 +70,6 @@ class Helper
      */
     public static function getAbsoluteRoot(){
         return str_replace("\\", "/", dirname(dirname(__DIR__)))."/";
-    }
-
-    /**
-     * @return string
-     */
-    public static function getRelativeRoot(){
-        return "../";
     }
 
     /**
