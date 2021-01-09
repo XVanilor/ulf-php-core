@@ -34,7 +34,7 @@ if(!function_exists('asset')){
 if(!function_exists("layout")){
     function layout(string $name, array $datas = NULL){
 
-        require_once config('core.paths.layouts').$name.'.php';
+        require config('core.paths.layouts').$name.'.php';
         return;
     }
 }
