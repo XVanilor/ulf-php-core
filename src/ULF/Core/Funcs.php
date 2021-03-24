@@ -17,7 +17,7 @@
 
 if(!function_exists('asset')){
     function asset(string $path){
-        return "/assets/".$path;
+        return config("app.url")."assets/".$path;
     }
 }
 
