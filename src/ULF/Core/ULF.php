@@ -15,7 +15,7 @@ class ULF
     public const PREVENT_DEFAULT_CONFIG    = "prevent_config";
     public const PREVENT_DEFAULT_MODULES   = "prevent_modules";
     public const PREVENT_DEFAULT_FUNCS     = "prevent_funcs";
-    public const PREVENT_DEFAULT_SESSION   = "prevent_funcs";
+    public const PREVENT_DEFAULT_SESSION   = "prevent_session";
 
     private array   $prevents;
 
