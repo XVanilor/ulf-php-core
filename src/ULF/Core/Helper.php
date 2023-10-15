@@ -22,7 +22,8 @@ class Helper
     /**
      *
      */
-    private static function getStaticVars(){
+    private static function getStaticVars(): void
+    {
         self::$properties["configPath"] = self::getRelativeRoot()."config/";
         self::$properties["config"] = "";
     }
@@ -31,7 +32,8 @@ class Helper
      * @param null $var
      * @return mixed
      */
-    public static function getEnv($var = NULL){
+    public static function getEnv($var = NULL): mixed
+    {
 
         $env = json_decode(file_get_contents(self::getRelativeRoot()."App/env.json"), true);
 
@@ -59,23 +61,24 @@ class Helper
      * @return void
      *
      */
-    public static function redirect(string $url){
-
+    public static function redirect(string $url): void
+    {
         header("Location: " . $url);
-        return;
     }
 
     /**
      * @return string
      */
-    public static function getAbsoluteRoot(){
+    public static function getAbsoluteRoot(): string
+    {
         return str_replace("\\", "/", dirname(dirname(__DIR__)))."/";
     }
 
     /**
      * @return string
      */
-    public static function getRelativeRoot(){
+    public static function getRelativeRoot(): string
+    {
         return "../";
     }
 
@@ -86,9 +89,8 @@ class Helper
      * @param object $sourceObject
      *
      * @return object
-     * @throws ReflectionException
      */
-    public static function castObject($destination, $sourceObject)
+    public static function castObject(object|string $destination, object $sourceObject): object
     {
         if (is_string($destination)) {
             $destination = new $destination();
@@ -100,9 +102,6 @@ class Helper
 
         foreach ($sourceProperties as $sourceProperty) {
 
-            var_dump($sourceProperty);
-            echo "<br /><br />";
-
             if($sourceProperty->isPublic()) {
 
                 $name = $sourceProperty->getName();
@@ -111,8 +110,6 @@ class Helper
                 if ($destinationReflection->hasProperty($name)) {
 
                     $destProperty = $destinationReflection->getProperty($name);
-                    var_dump($destProperty);
-                    echo "<br /><br />";
 
                     if ($destProperty->isPublic()) {
                         $destProperty->setValue($destination, $value);

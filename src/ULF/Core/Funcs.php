@@ -16,7 +16,8 @@
  **/
 
 if(!function_exists('asset')){
-    function asset(string $path){
+    function asset(string $path): string
+    {
         return \ULF\Core\Helper::getRelativeRoot()."assets/".$path;
     }
 }
@@ -32,10 +33,9 @@ if(!function_exists('asset')){
  **/
 
 if(!function_exists("layout")){
-    function layout(string $name, array $datas = NULL){
-
+    function layout(string $name, array $datas = NULL): void
+    {
         require_once config('core.paths.layouts').$name.'.php';
-        return;
     }
 }
 
@@ -49,10 +49,9 @@ if(!function_exists("layout")){
  **/
 
 if(!function_exists("controller")){
-    function controller(string $name){
-
+    function controller(string $name): void
+    {
         include config('core.paths.controllers').$name.".php";
-        return;
     }
 }
 
@@ -66,10 +65,9 @@ if(!function_exists("controller")){
  **/
 
 if(!function_exists("module")){
-    function module(string $name){
-
+    function module(string $name): void
+    {
         require_once config('core.paths.modules').$name.".php";
-        return;
     }
 }
 
@@ -82,10 +80,11 @@ if(!function_exists("module")){
  * @return string
  */
 if(!function_exists("view")){
-    function view(string $name, array $datas = NULL){
+    function view(string $name, array $data = NULL): void
+    {
 
-        if($datas)
-            extract($datas);
+        if($data)
+            extract($data);
 
         if(!is_file(config('core.paths.views').$name.'.php')){
             debug_print_backtrace();
@@ -93,7 +92,6 @@ if(!function_exists("view")){
         }
 
         require_once config('core.paths.views').$name.'.php' ;
-        return;
     }
 }
 
@@ -110,8 +108,8 @@ if(!function_exists("view")){
  */
 if(!function_exists("sec")){
 
-    function sec(string $string){
-
+    function sec(string $string): string
+    {
         return htmlentities($string, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
     }
@@ -120,8 +118,8 @@ if(!function_exists("sec")){
 
 if(!function_exists("dd")){
 
-    function dd($var){
-
+    function dd($var): void
+    {
         var_dump($var);
         die;
 
@@ -139,8 +137,8 @@ if(!function_exists("dd")){
  */
 if(!function_exists('config')){
 
-    function config(string $key = NULL) {
-
+    function config(string $key = NULL): array|string
+    {
        global $core;
        return $core->config($key);
 

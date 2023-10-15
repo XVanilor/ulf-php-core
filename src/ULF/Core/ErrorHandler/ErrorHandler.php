@@ -7,12 +7,12 @@
  *
  */
 
-namespace App\Core\ErrorHandler;
+namespace ULF\Core\ErrorHandler;
 
 class ErrorHandler {
 
-    public static function throw(){
-
+    public static function throw(): void
+    {
         ob_clean();
         flush();
         exit();

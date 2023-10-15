@@ -38,8 +38,8 @@ class ULF
      *
      * @return $this
      */
-    public function preventDefault(string $prevent_const){
-
+    public function preventDefault(string $prevent_const): ULF
+    {
         $this->prevents[$prevent_const] = 1;
         return $this;
     }
@@ -47,8 +47,8 @@ class ULF
     /**
      * Run the framework. Let's go!
      */
-    public function run(){
-
+    public function run(): ULF
+    {
         if(!isset($this->prevents[self::PREVENT_DEFAULT_CONFIG]))
             $this->config = (new KeyBuilder('../config'))->build();
 
@@ -85,9 +85,11 @@ class ULF
     /**
      * Configuration getter.
      *
+     * @param mixed $key
      * @return array|string
      */
-    public function config($key = NULL){
+    public function config(mixed $key = null): array|string
+    {
 
         if(!$key)
             return $this->config;
@@ -105,7 +107,8 @@ class ULF
      *
      * @return array|string
      */
-    public function route($route_path = NULL){
+    public function route($route_path = NULL): array|string
+    {
 
         if(!$route_path)
             return $this->routes;
@@ -113,7 +116,6 @@ class ULF
         if(!isset($this->routes[$route_path])){
             debug_print_backtrace();
             trigger_error("[Router] $route_path route key does not exist.", E_USER_ERROR);
-            return;
         }
 
         return $this->routes[$route_path];
@@ -141,7 +143,8 @@ class ULF
      *
      * @return void
      */
-    private function loadFunctions(){
+    private function loadFunctions(): void
+    {
 
         /**
          * @TODO
@@ -168,7 +171,8 @@ class ULF
      *
      * @return array
      */
-    private function loadRoutes(){
+    private function loadRoutes(): array
+    {
 
         $dir = '../routes/';
         $routes_dir = array_diff(scandir($dir), ['.', '..']);

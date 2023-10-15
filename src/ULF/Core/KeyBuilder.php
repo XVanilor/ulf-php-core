@@ -25,7 +25,8 @@ class KeyBuilder
      *
      * @return array
      */
-    public function build(){
+    public function build(): array
+    {
 
         $subs = array_diff(scandir($this->dir_path), [".", ".."]);
         $built_files = [];
@@ -72,7 +73,8 @@ class KeyBuilder
      *
      * @return array
      */
-    private function buildFile(string $file, string $file_key){
+    private function buildFile(string $file, string $file_key): array
+    {
 
             //Building keys
             $stack              = include $file;
@@ -84,7 +86,6 @@ class KeyBuilder
             if(!is_array($stack)){
                 debug_print_backtrace();
                 trigger_error("[KeyBuilder] File $file is not returning an array. Aborting.", E_USER_ERROR);
-                exit;
             }
 
             while(!empty($stack)){
