@@ -18,7 +18,7 @@
 if(!function_exists('asset')){
     function asset(string $path): string
     {
-        return \ULF\Core\Helper::getRelativeRoot()."assets/".$path;
+        return "/assets/".$path;
     }
 }
 
